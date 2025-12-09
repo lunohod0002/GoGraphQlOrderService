@@ -1,0 +1,97 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Cart {
+  id: Int!
+  userId:Int!
+  items: [Item!]
+  totalSum: Int!
+  discount: Int!
+}
+
+type User {
+  id: Int!
+  fio: String!
+  balance: Int!
+}
+
+type Item {
+    id: Int!
+    productId: Int!
+    quantity: Int!
+}
+
+type Order{
+    id: Int!
+    cart: Cart!
+    status: String!
+    createdAt: String!
+}
+
+type Product {
+      id: Int!
+      name: String!
+      price: Int!
+
+}
+
+input ProductCreateInput {
+  name: String!
+  price: Int!
+}
+
+input UserCreateInput {
+  fio: String!
+  balance: Int!
+
+}
+
+input CartUpdateInput {
+    userID: Int!
+    items: [ItemUpdateInput!]!
+}
+
+
+input ItemAddInput {
+    userID: Int!
+    productId: Int!
+    quantity: Int!
+}
+input ItemRemoveInput{
+    userID: Int!
+     productId: Int!
+
+}
+input ItemAddResponse {
+    id: Int!
+    productId: Int!
+    quantity: Int!
+}
+input ItemUpdateInput {
+    productId: Int!
+    quantity: Int!
+}
+
+input OrderCreateInput {
+  name: String!
+  userId: Int!
+}
+
+
+type Query {
+  getProducts: [Product!]!
+  getOrders: [Order!]!
+  getOrder(id: Int!): Order!
+  getCart(id: Int!): Cart!
+  getUser(id: Int!): User!
+}
+
+type Mutation {
+  addToCart(input: ItemAddInput!): Item
+  removeFromCart( input:ItemRemoveInput!): Cart
+  updateCartItemsList(input: CartUpdateInput!): Cart
+  makeOrder(input: OrderCreateInput!): Order
+  addProduct(input:ProductCreateInput!): Product
+  addUser(input:UserCreateInput!): User
+}
