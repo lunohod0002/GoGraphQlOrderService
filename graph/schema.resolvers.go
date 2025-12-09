@@ -14,7 +14,7 @@ import (
 
 // AddToCart is the resolver for the AddToCart field.
 func (r *mutationResolver) AddToCart(ctx context.Context, input model.ItemAddInput) (*model.Item, error) {
-	return r.CartService.AddProduct(ctx, &input), nil
+	return r.CartService.AddCart(ctx, &input), nil
 }
 
 // RemoveFromCart is the resolver for the removeFromCart field.

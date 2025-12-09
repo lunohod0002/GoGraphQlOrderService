@@ -29,8 +29,9 @@ func NewApp(db *sql.DB) *App {
 	productRepo := repositories.NewProductRepository(db)
 	productService := services.NewProductService(productRepo)
 	userRepo := repositories.NewUserRepository(db)
-	userService := services.NewUserService(userRepo)
 	cartRepo := repositories.NewCartRepository(db)
+
+	userService := services.NewUserService(cartRepo, userRepo)
 	cartService := services.NewCartService(cartRepo)
 	resolver := graph.NewResolver(productService, cartService, userService)
 
