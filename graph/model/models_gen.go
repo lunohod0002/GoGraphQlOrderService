@@ -6,8 +6,12 @@ type Cart struct {
 	ID       int     `json:"id"`
 	UserID   int     `json:"userId"`
 	Items    []*Item `json:"items,omitempty"`
-	TotalSum int32   `json:"totalSum"`
-	Discount int32   `json:"discount"`
+	TotalSum *int32  `json:"totalSum,omitempty"`
+	Discount *int32  `json:"discount,omitempty"`
+}
+
+type CartCreateInput struct {
+	UserID int `json:"userId"`
 }
 
 type CartUpdateInput struct {
@@ -18,11 +22,12 @@ type CartUpdateInput struct {
 type Item struct {
 	ID        int   `json:"id"`
 	ProductID int   `json:"productId"`
+	CartID    int   `json:"cartID"`
 	Quantity  int32 `json:"quantity"`
 }
 
 type ItemAddInput struct {
-	UserID    int   `json:"userID"`
+	CartID    int   `json:"cartId"`
 	ProductID int   `json:"productId"`
 	Quantity  int32 `json:"quantity"`
 }

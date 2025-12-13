@@ -6,8 +6,8 @@ type Cart {
   id: ID!
   userId:ID!
   items: [Item!]
-  totalSum: Int!
-  discount: Int!
+  totalSum: Int
+  discount: Int
 }
 
 type User {
@@ -19,6 +19,7 @@ type User {
 type Item {
     id: ID!
     productId: ID!
+    cartID: ID!
     quantity: Int!
 }
 
@@ -40,7 +41,9 @@ input ProductCreateInput {
   name: String!
   price: Int!
 }
-
+input CartCreateInput {
+  userId:ID!
+}
 input UserCreateInput {
   fio: String!
   balance: Int!
@@ -54,7 +57,7 @@ input CartUpdateInput {
 
 
 input ItemAddInput {
-    userID: ID!
+    cartId: ID!
     productId: ID!
     quantity: Int!
 }
@@ -94,4 +97,6 @@ type Mutation {
   makeOrder(input: OrderCreateInput!): Order
   addProduct(input:ProductCreateInput!): Product
   addUser(input:UserCreateInput!): User
+  addCart(input: CartCreateInput!): Cart
+
 }

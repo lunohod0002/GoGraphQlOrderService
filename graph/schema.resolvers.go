@@ -15,7 +15,7 @@ import (
 
 // AddToCart is the resolver for the AddToCart field.
 func (r *mutationResolver) AddToCart(ctx context.Context, input model.ItemAddInput) (*model.Item, error) {
-	return r.CartService.AddCart(ctx, &input), nil
+	return r.CartService.AddToCart(ctx, &input), nil
 }
 
 // RemoveFromCart is the resolver for the removeFromCart field.
@@ -43,14 +43,19 @@ func (r *mutationResolver) AddUser(ctx context.Context, input model.UserCreateIn
 	return r.UserService.Create(ctx, input), nil
 }
 
+// AddCart is the resolver for the addCart field.
+func (r *mutationResolver) AddCart(ctx context.Context, input model.CartCreateInput) (*model.Cart, error) {
+	return r.CartService.AddCart(ctx, &input), nil
+}
+
 // GetProducts is the resolver for the getProducts field.
 func (r *queryResolver) GetProducts(ctx context.Context) ([]*model.Product, error) {
 	panic(fmt.Errorf("not implemented: GetProducts - getProducts"))
 }
 
 // GetOrders is the resolver for the getOrders field.
-func (r *queryResolver) GetOrders(ctx context.Context, userId int) ([]*model.Order, error) {
-	return r.OrderService.GetAll(ctx, userId), nil
+func (r *queryResolver) GetOrders(ctx context.Context, userID int) ([]*model.Order, error) {
+	return r.OrderService.GetAll(ctx, userID), nil
 }
 
 // GetOrder is the resolver for the getOrder field.

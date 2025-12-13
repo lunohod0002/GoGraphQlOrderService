@@ -19,8 +19,8 @@ func NewCartRepository(db *sql.DB) *CartRepository {
 func (r *CartRepository) AddItem(itemInput *model.ItemAddInput) (*model.Item, error) {
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 	query := psql.
-		Insert("carts").Columns("user_id", "product_id", "quantity").
-		Values(itemInput.UserID, itemInput.ProductID, itemInput.Quantity).Suffix("RETURNING id")
+		Insert("items").Columns("cart_id", "product_id", "quantity").
+		Values(itemInput.CartID, itemInput.ProductID, itemInput.Quantity).Suffix("RETURNING id")
 	q, args, _ := query.ToSql()
 	var id int32
 	err := r.db.QueryRow(q, args...).Scan(&id)
