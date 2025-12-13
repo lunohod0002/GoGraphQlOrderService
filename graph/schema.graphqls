@@ -3,34 +3,34 @@
 # https://gqlgen.com/getting-started/
 
 type Cart {
-  id: Int!
-  userId:Int!
+  id: ID!
+  userId:ID!
   items: [Item!]
   totalSum: Int!
   discount: Int!
 }
 
 type User {
-  id: Int!
+  id: ID!
   fio: String!
   balance: Int!
 }
 
 type Item {
-    id: Int!
-    productId: Int!
+    id: ID!
+    productId: ID!
     quantity: Int!
 }
 
 type Order{
-    id: Int!
+    id: ID!
     cart: Cart!
     status: String!
     createdAt: String!
 }
 
 type Product {
-      id: Int!
+      id: ID!
       name: String!
       price: Int!
 
@@ -48,43 +48,43 @@ input UserCreateInput {
 }
 
 input CartUpdateInput {
-    userID: Int!
+    userID: ID!
     items: [ItemUpdateInput!]!
 }
 
 
 input ItemAddInput {
-    userID: Int!
-    productId: Int!
+    userID: ID!
+    productId: ID!
     quantity: Int!
 }
 input ItemRemoveInput{
-    userID: Int!
+    userID: ID!
      productId: Int!
 
 }
 input ItemAddResponse {
-    id: Int!
-    productId: Int!
+    id: ID!
+    productId: ID!
     quantity: Int!
 }
 input ItemUpdateInput {
-    productId: Int!
+    productId: ID!
     quantity: Int!
 }
 
 input OrderCreateInput {
   name: String!
-  userId: Int!
+  cartId: ID!
 }
 
 
 type Query {
   getProducts: [Product!]!
-  getOrders: [Order!]!
-  getOrder(id: Int!): Order!
-  getCart(id: Int!): Cart!
-  getUser(id: Int!): User!
+  getOrders(user_id: ID!): [Order!]!
+  getOrder(id: ID!): Order!
+  getCart(id: ID!): Cart!
+  getUser(id: ID!): User!
 }
 
 type Mutation {

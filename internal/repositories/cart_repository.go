@@ -28,7 +28,7 @@ func (r *CartRepository) AddItem(itemInput *model.ItemAddInput) (*model.Item, er
 		return nil, fmt.Errorf("не удалось выполнить запрос: %v", err)
 	}
 
-	return &model.Item{ID: id, ProductID: itemInput.ProductID, Quantity: itemInput.Quantity}, nil
+	return &model.Item{ID: int(id), ProductID: itemInput.ProductID, Quantity: itemInput.Quantity}, nil
 }
 
 func (r *CartRepository) Create(user_id int) (*model.Cart, error) {
@@ -43,7 +43,17 @@ func (r *CartRepository) Create(user_id int) (*model.Cart, error) {
 		return nil, fmt.Errorf("не удалось выполнить запрос: %v", err)
 	}
 
-	return &model.Cart{ID: id}, nil
+	return &model.Cart{ID: int(id)}, nil
+}
+func (r *CartRepository) Get(cart_id int) *model.Cart {
+	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
+	var cart model.Cart
+	query := psql.Select().
+		From("carts").Where(sq.Eq{"cart_id": cart_id})
+
+	query.RunWith(r.db).QueryRow().Scan(&cart.ID, &cart.UserID, &cart.Items, cart.TotalSum, cart.Discount)
+
+	return &cart
 }
 func (r *CartRepository) RemoveItem(itemInput *model.ItemRemoveInput) (*model.Item, error) {
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
@@ -55,6 +65,6 @@ func (r *CartRepository) RemoveItem(itemInput *model.ItemRemoveInput) (*model.It
 	if err != nil {
 		return nil, fmt.Errorf("не удалось выполнить запрос: %v", err)
 	}
-	//TODO: добавить подсчет нового кол-ва
-	return &model.Item{ID: id, ProductID: itemInput.ProductID, Quantity: 1}, nil
+
+	return &model.Item{ID: int(id), ProductID: int(itemInput.ProductID), Quantity: 1}, nil
 }

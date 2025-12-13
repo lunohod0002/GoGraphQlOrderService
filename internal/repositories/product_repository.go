@@ -28,5 +28,5 @@ func (r *ProductRepository) Create(product *model.Product) (*model.Product, erro
 		return nil, fmt.Errorf("не удалось выполнить запрос: %v", err)
 	}
 
-	return &model.Product{ID: id, Price: product.Price, Name: product.Name}, nil
+	return &model.Product{ID: int(id), Price: product.Price, Name: product.Name}, nil
 }

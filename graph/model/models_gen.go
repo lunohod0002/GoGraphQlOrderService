@@ -3,43 +3,43 @@
 package model
 
 type Cart struct {
-	ID       int32   `json:"id"`
-	User     *User   `json:"user"`
+	ID       int     `json:"id"`
+	UserID   int     `json:"userId"`
 	Items    []*Item `json:"items,omitempty"`
 	TotalSum int32   `json:"totalSum"`
 	Discount int32   `json:"discount"`
 }
 
 type CartUpdateInput struct {
-	UserID int32              `json:"userID"`
+	UserID int                `json:"userID"`
 	Items  []*ItemUpdateInput `json:"items"`
 }
 
 type Item struct {
-	ID        int32 `json:"id"`
-	ProductID int32 `json:"productId"`
+	ID        int   `json:"id"`
+	ProductID int   `json:"productId"`
 	Quantity  int32 `json:"quantity"`
 }
 
 type ItemAddInput struct {
-	UserID    int32 `json:"userID"`
-	ProductID int32 `json:"productId"`
+	UserID    int   `json:"userID"`
+	ProductID int   `json:"productId"`
 	Quantity  int32 `json:"quantity"`
 }
 
 type ItemAddResponse struct {
-	ID        int32 `json:"id"`
-	ProductID int32 `json:"productId"`
+	ID        int   `json:"id"`
+	ProductID int   `json:"productId"`
 	Quantity  int32 `json:"quantity"`
 }
 
 type ItemRemoveInput struct {
-	UserID    int32 `json:"userID"`
+	UserID    int   `json:"userID"`
 	ProductID int32 `json:"productId"`
 }
 
 type ItemUpdateInput struct {
-	ProductID int32 `json:"productId"`
+	ProductID int   `json:"productId"`
 	Quantity  int32 `json:"quantity"`
 }
 
@@ -47,7 +47,7 @@ type Mutation struct {
 }
 
 type Order struct {
-	ID        int32  `json:"id"`
+	ID        int    `json:"id"`
 	Cart      *Cart  `json:"cart"`
 	Status    string `json:"status"`
 	CreatedAt string `json:"createdAt"`
@@ -55,11 +55,11 @@ type Order struct {
 
 type OrderCreateInput struct {
 	Name   string `json:"name"`
-	UserID int32  `json:"userId"`
+	CartID int    `json:"cartId"`
 }
 
 type Product struct {
-	ID    int32  `json:"id"`
+	ID    int    `json:"id"`
 	Name  string `json:"name"`
 	Price int32  `json:"price"`
 }
@@ -73,7 +73,7 @@ type Query struct {
 }
 
 type User struct {
-	ID      int32  `json:"id"`
+	ID      int    `json:"id"`
 	Fio     string `json:"fio"`
 	Balance int32  `json:"balance"`
 }

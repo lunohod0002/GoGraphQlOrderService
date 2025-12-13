@@ -4,7 +4,6 @@ import (
 	"OzonOrderService/graph"
 	"OzonOrderService/internal/repositories"
 	"OzonOrderService/internal/services"
-
 	"database/sql"
 	"log"
 	"net/http"
@@ -30,10 +29,12 @@ func NewApp(db *sql.DB) *App {
 	productService := services.NewProductService(productRepo)
 	userRepo := repositories.NewUserRepository(db)
 	cartRepo := repositories.NewCartRepository(db)
+	orderRepo := repositories.NewOrderRepository(db)
+	orderService := services.NewOrderService(orderRepo, cartRepo)
 
 	userService := services.NewUserService(cartRepo, userRepo)
 	cartService := services.NewCartService(cartRepo)
-	resolver := graph.NewResolver(productService, cartService, userService)
+	resolver := graph.NewResolver(productService, cartService, userService, orderService)
 
 	return &App{
 		GQLResolver: resolver,
@@ -49,6 +50,32 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	//config := sarama.NewConfig()
+	//config.Producer.Return.Successes = true
+	//config.Producer.Return.Errors = true
+	//
+	//producer, err := sarama.NewSyncProducer([]string{"localhost:9092"}, nil)
+	//if err != nil {
+	//	log.Fatalf("Failed to create producer: %v", err)
+	//}
+	//defer producer.Close()
+	//
+	//// Отправка сообщения
+	//msg := &sarama.ProducerMessage{
+	//	Topic: "default",
+	//	Key:   sarama.StringEncoder("3"),
+	//	Value: sarama.ByteEncoder("3"),
+	//}
+	//
+	//// отправка сообщения в Kafka
+	//_, _, err = producer.SendMessage(msg)
+	//if err != nil {
+	//	log.Printf("Failed to send message to Kafka: %v", err)
+	//
+	//}
+	//
+	//// Ждем завершения (для демо)
+
 	app := NewApp(db)
 	srv := handler.New(graph.NewExecutableSchema(graph.Config{Resolvers: app.GQLResolver}))
 

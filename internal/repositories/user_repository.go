@@ -31,5 +31,5 @@ func (r *UserRepository) Create(user *model.User) (*model.User, error) {
 		return nil, fmt.Errorf("не удалось выполнить запрос: %v", err)
 	}
 	fmt.Println(id)
-	return &model.User{ID: id, Fio: user.Fio, Balance: user.Balance}, nil
+	return &model.User{ID: int(id), Fio: user.Fio, Balance: user.Balance}, nil
 }

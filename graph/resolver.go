@@ -12,11 +12,18 @@ type Resolver struct {
 	ProductService *services.ProductService
 	UserService    *services.UserService
 	CartService    *services.CartService
+	OrderService   *services.OrderService
 }
 
-func NewResolver(ProductService *services.ProductService, CartService *services.CartService, UserService *services.UserService) *Resolver {
+func NewResolver(ProductService *services.ProductService,
+	CartService *services.CartService,
+	UserService *services.UserService,
+	OrderService *services.OrderService,
+) *Resolver {
 	return &Resolver{
 		ProductService: ProductService,
 		UserService:    UserService,
-		CartService:    CartService}
+		CartService:    CartService,
+		OrderService:   OrderService,
+	}
 }
