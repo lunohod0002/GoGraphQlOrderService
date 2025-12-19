@@ -50,28 +50,9 @@ input UserCreateInput {
 
 }
 
-input CartUpdateInput {
-    userID: ID!
-    items: [ItemUpdateInput!]!
-}
 
-
-input ItemAddInput {
-    cartId: ID!
-    productId: ID!
-    quantity: Int!
-}
-input ItemRemoveInput{
-    userID: ID!
-     productId: Int!
-
-}
-input ItemAddResponse {
-    id: ID!
-    productId: ID!
-    quantity: Int!
-}
 input ItemUpdateInput {
+    cartId: ID!
     productId: ID!
     quantity: Int!
 }
@@ -84,16 +65,15 @@ input OrderCreateInput {
 
 type Query {
   getProducts: [Product!]!
-  getOrders(user_id: ID!): [Order!]!
+  getOrders(userID: ID!): [Order!]!
   getOrder(id: ID!): Order!
   getCart(id: ID!): Cart!
   getUser(id: ID!): User!
 }
 
 type Mutation {
-  addToCart(input: ItemAddInput!): Item
-  removeFromCart( input:ItemRemoveInput!): Cart
-  updateCartItemsList(input: CartUpdateInput!): Cart
+  addToCart(input: ItemUpdateInput!): Item
+  removeFromCart( input:ItemUpdateInput!): Item
   makeOrder(input: OrderCreateInput!): Order
   addProduct(input:ProductCreateInput!): Product
   addUser(input:UserCreateInput!): User

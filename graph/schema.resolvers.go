@@ -14,18 +14,21 @@ import (
 )
 
 // AddToCart is the resolver for the AddToCart field.
-func (r *mutationResolver) AddToCart(ctx context.Context, input model.ItemAddInput) (*model.Item, error) {
-	return r.CartService.AddToCart(ctx, &input), nil
+func (r *mutationResolver) AddToCart(ctx context.Context, input model.ItemUpdateInput) (*model.Item, error) {
+	item, err := r.CartService.AddToCart(ctx, &input)
+	if err != nil {
+		return nil, err
+	}
+	return item, nil
 }
 
 // RemoveFromCart is the resolver for the removeFromCart field.
-func (r *mutationResolver) RemoveFromCart(ctx context.Context, input model.ItemRemoveInput) (*model.Cart, error) {
-	panic(fmt.Errorf("not implemented: RemoveFromCart - removeFromCart"))
-}
-
-// UpdateCartItemsList is the resolver for the UpdateCartItemsList field.
-func (r *mutationResolver) UpdateCartItemsList(ctx context.Context, input model.CartUpdateInput) (*model.Cart, error) {
-	panic(fmt.Errorf("not implemented: UpdateCartItemsList - UpdateCartItemsList"))
+func (r *mutationResolver) RemoveFromCart(ctx context.Context, input model.ItemUpdateInput) (*model.Item, error) {
+	item, err := r.CartService.RemoveFromCart(ctx, &input)
+	if err != nil {
+		return nil, err
+	}
+	return item, nil
 }
 
 // MakeOrder is the resolver for the MakeOrder field.
